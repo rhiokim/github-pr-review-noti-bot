@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:7
+FROM mhart/alpine-node:8
 # FROM node:latest
 MAINTAINER Rhio Kim <rhio.kim@gmail.com>
 
