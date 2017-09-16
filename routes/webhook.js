@@ -28,8 +28,27 @@ handler.on("ping", event => {
 });
 
 handler.on("pull_request_review_comment", event => {
-  console.log("pull_request_review_comment");
-  console.log(event.payload);
+  const { payload } = event;
+  const { comment, pull_request } = payload;
+  const comment_from = `@${comment.user.login}`;
+  const comment_body = `> ${comment.body}`;
+  const comment_link = `<${comment.html_url}|Comment HERE! :speaking_head_in_silhouette:>`;
+  const pr_link = `<${pull_request.html_url}|PR>`;
+
+  switch (payload.action) {
+    case "created":
+      const comment_message = `Hey smart guys! @${pull_request.user.login}
+    You got comments from ${comment_from} about your ${pr_link} - ${comment_link}\n${comment_body}`;
+
+      slack.send(comment_message, function(err, res) {
+        if (err) {
+          console.log("Error:", err);
+        } else {
+          console.log("Message sent: ", res);
+        }
+      });
+      break;
+  }
 });
 
 handler.on("pull_request_review", event => {
@@ -40,16 +59,15 @@ handler.on("pull_request_review", event => {
 handler.on("pull_request", event => {
   const { payload } = event;
   const { pull_request, requested_reviewer } = payload;
-  console.log(event);
-  switch (event.action) {
+
+  switch (payload.action) {
     case "review_requested":
       const review_to = pull_request.requested_reviewers.map(user => `@${user.login}`);
-      const pr_body = `${pull_request.body}`;
+      const pr_body = pull_request.body.split("\n").map(line => `> ${line}`).join("\n");
       const pr_link = `<${pull_request.html_url}|Review HERE! :rocket:>`;
       const pr_from = `from @${pull_request.user.login}`;
 
-      const pr_message = `Hey smart guys! ${review_to}
-      You got a PR review request ${pr_from} - ${pr_link}\`\`\`${pr_body}\`\`\``;
+      const pr_message = `Hey smart guys! ${review_to}\nYou got a PR review request ${pr_from} - ${pr_link}\n${pr_body}`;
 
       slack.send(pr_message, function(err, res) {
         if (err) {
