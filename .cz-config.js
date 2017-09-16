@@ -22,7 +22,7 @@ module.exports = {
     { value: "WIP", name: "🔥 WIP: (:fire:) Work in progress" }
   ],
 
-  scopes: [{ name: "ui" }, { name: "env" }],
+  scopes: [{ name: "slack" }, { name: "github" }, { name: "env" }],
 
   allowCustomScopes: true,
   allowBreakingChanges: ["feat", "fix"]

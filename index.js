@@ -7,10 +7,8 @@ const pkg = require("./package.json");
 const app = express();
 const PORT = process.env.PORT || 8082;
 
-const routeSample = require("./routes/sample.route");
 const webhook = require("./routes/webhook");
 
-app.use("/sample", routeSample);
 app.use("/webhook", webhook);
 
 app.get("/", (req, res) => {
