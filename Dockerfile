@@ -8,12 +8,12 @@ MAINTAINER Rhio Kim <rhio.kim@gmail.com>
 RUN mkdir -p server
 WORKDIR server
 
-COPY lib lib
+COPY libs libs
+COPY routes routes
 COPY index.js index.js
 COPY package.json package.json
 
 RUN npm install --quiet --no-color --prod
-RUN npm cache clean
 
 ENV PORT 8082
 
