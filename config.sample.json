@@ -1,0 +1,21 @@
+{
+  "botName": "Bot",
+  "iconEmoji": ":slack:",
+  "defaultChannel": "#general",
+  "githubSecret": "1234",
+  "users": {
+    // user mapping from github to slack
+    "nodejs-kr": "rhiokim"
+  },
+  "repositories": {
+    // channel mapping from github repo to slack channel
+    "gorae-github-pipe-test": "#iot"
+  },
+  "trigger": {
+    //https://developer.github.com/v3/activity/events/types/
+    "pull_request": {},
+    "pull_request_review": {},
+    "pull_request_review_comment": {}
+  },
+  "slackWebhookUrl": "YOUR SLACK WEBHOOK URL"
+}

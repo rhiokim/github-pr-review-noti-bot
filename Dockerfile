@@ -10,6 +10,7 @@ WORKDIR server
 
 COPY libs libs
 COPY routes routes
+COPY config.json config.json
 COPY index.js index.js
 COPY package.json package.json
 

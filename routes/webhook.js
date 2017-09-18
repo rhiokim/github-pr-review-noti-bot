@@ -2,8 +2,9 @@ const path = require("path");
 const express = require("express");
 const createHandler = require("github-webhook-handler");
 const slack = require("../libs/slack");
+const config = require("../config");
 
-const SECRET = process.env.GITHUB_SECRET || process.argv[2] || "";
+const SECRET = config.githubSecret || process.env.GITHUB_SECRET || process.argv[2] || "";
 
 const handler = createHandler({ path: "/", secret: SECRET });
 const router = express.Router();
@@ -37,7 +38,7 @@ handler.on("pull_request_review_comment", event => {
 
   switch (payload.action) {
     case "created":
-      const comment_message = `Hey smart guys! @${pull_request.user.login}
+      const comment_message = `Hey @${pull_request.user.login}
     You got comments from ${comment_from} about your ${pr_link} - ${comment_link}\n${comment_body}`;
 
       slack.send(comment_message, function(err, res) {
@@ -63,11 +64,14 @@ handler.on("pull_request", event => {
   switch (payload.action) {
     case "review_requested":
       const review_to = pull_request.requested_reviewers.map(user => `@${user.login}`);
-      const pr_body = pull_request.body.split("\n").map(line => `> ${line}`).join("\n");
+      const pr_body = pull_request.body
+        .split("\n")
+        .map(line => `> ${line}`)
+        .join("\n");
       const pr_link = `<${pull_request.html_url}|Review HERE! :rocket:>`;
       const pr_from = `from @${pull_request.user.login}`;
 
-      const pr_message = `Hey smart guys! ${review_to}\nYou got a PR review request ${pr_from} - ${pr_link}\n${pr_body}`;
+      const pr_message = `Hey ${review_to}\nYou got a PR review request ${pr_from} - ${pr_link}\n${pr_body}`;
 
       slack.send(pr_message, function(err, res) {
         if (err) {
