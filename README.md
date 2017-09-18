@@ -21,5 +21,26 @@ or
 
 create `config.json`
 
+```js
+{
+  "botName": "Bot",
+  "iconEmoji": ":slack:",
+  "defaultChannel": "#channel_name",
+  "githubSecret": "1234",
+  "users": {
+    "nodejs-kr": "rhiokim"
+  },
+  "repositories": {
+    "repository_name": "#channel_name"
+  },
+  "trigger": {
+    "pull_request": {},
+    "pull_request_review": {},
+    "pull_request_review_comment": {}
+  },
+  "slackWebhookUrl": "YOUR SLACK WEBHOOK URL"
+}
+```
+
 ## License
 MIT
