@@ -9,8 +9,6 @@ const SECRET = config.githubSecret || process.env.GITHUB_SECRET || process.argv[
 const handler = createHandler({ path: "/", secret: SECRET });
 const router = express.Router();
 
-const getSlackUserNameByGithubId = githubId => config.users[githubId] || githubId;
-
 router.all("/*", (req, res) => {
   handler(req, res, err => {
     if (err) {
