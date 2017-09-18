@@ -9,6 +9,8 @@ const SECRET = config.githubSecret || process.env.GITHUB_SECRET || process.argv[
 const handler = createHandler({ path: "/", secret: SECRET });
 const router = express.Router();
 
+const getSlackUserNameByGithubId = githubId => config.users[githubId] || githubId;
+
 router.all("/*", (req, res) => {
   handler(req, res, err => {
     if (err) {
@@ -31,10 +33,15 @@ handler.on("ping", event => {
 handler.on("pull_request_review_comment", event => {
   const { payload } = event;
   const { comment, pull_request } = payload;
-  const comment_from = `@${comment.user.login}`;
+  const comment_from = `@${getSlackUserNameByGithubId(comment.user.login)}`;
   const comment_body = `> ${comment.body}`;
   const comment_link = `<${comment.html_url}|Comment HERE! :speaking_head_in_silhouette:>`;
   const pr_link = `<${pull_request.html_url}|PR>`;
+
+  // If commenting user equal to PR user, don't send any message to slack
+  if (comment.user.login === pull_request.user.login) {
+    return;
+  }
 
   switch (payload.action) {
     case "created":
@@ -69,7 +76,7 @@ handler.on("pull_request", event => {
         .map(line => `> ${line}`)
         .join("\n");
       const pr_link = `<${pull_request.html_url}|Review HERE! :rocket:>`;
-      const pr_from = `from @${pull_request.user.login}`;
+      const pr_from = `from @${getSlackUserNameByGithubId(pull_request.user.login)}`;
 
       const pr_message = `Hey ${review_to}\nYou got a PR review request ${pr_from} - ${pr_link}\n${pr_body}`;
 

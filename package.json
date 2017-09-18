@@ -9,7 +9,7 @@
     "lint": "eslint 'lib/**/*.js'",
     "lint:msg": "validate-commit-msg",
     "start": "node .",
-    "deploy": "npm run build && npm run docker:build",
+    "deploy": "now deploy --docker --public",
     "commit": "git cz",
     "precommit": "npm run lint",
     "commitmsg": "npm run lint:msg",
