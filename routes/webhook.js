@@ -70,7 +70,7 @@ handler.on("pull_request", event => {
 
   switch (payload.action) {
     case "review_requested":
-      const review_to = pull_request.requested_reviewers.map(user => `@${user.login}`);
+      const review_to = pull_request.requested_reviewers.map(user => `@${getSlackUserNameByGithubId(user.login)}`);
       const pr_body = pull_request.body
         .split("\n")
         .map(line => `> ${line}`)
