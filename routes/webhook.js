@@ -1,7 +1,6 @@
 const path = require("path");
 const express = require("express");
 const createHandler = require("github-webhook-handler");
-const slack = require("../libs/slack");
 const config = require("../config");
 
 const SECRET = config.githubSecret || process.env.GITHUB_SECRET || process.argv[2] || "";
