@@ -17,7 +17,7 @@ module.exports = event => {
 
   switch (payload.action) {
     case "created":
-      const comment_message = `Hey @${pull_request.user.login}
+      const comment_message = `Hey @${getSlackUserNameByGithubId(pull_request.user.login)}
     You got comments from ${comment_from} about your ${pr_link} - ${comment_link}\n${comment_body}`;
 
       slack.send(comment_message, function(err, res) {

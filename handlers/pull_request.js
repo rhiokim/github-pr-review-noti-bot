@@ -2,6 +2,10 @@ const slack = require("../libs/slack");
 const { getSlackUserNameByGithubId } = require("../libs/helper");
 
 const _cache = {};
+/*
+ * Why need this logic?
+ * If you assigned 4 reviwers with your new PR, Four webhook events are occured on github
+ */
 const reduceReviewRequestedNotification = (prNum, reviewer, next) => {
   let pr;
   if (!_cache.hasOwnProperty(prNum)) {
