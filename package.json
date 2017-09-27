@@ -13,7 +13,7 @@
     "commit": "git cz",
     "precommit": "npm run lint",
     "commitmsg": "npm run lint:msg",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "docker:images": "docker images | grep github-pr-review-noti-bot",
     "docker:rm": "docker rm -f github-pr-review-noti-bot",
     "docker:run": "docker run -dit -p 8082:8082 --name github-pr-review-noti-bot github-pr-review-noti-bot:latest",
