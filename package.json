@@ -1,6 +1,6 @@
 {
   "name": "github-pr-review-noti-bot",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Github Pull Request Notification Bot",
   "main": "index.js",
   "private": true,
